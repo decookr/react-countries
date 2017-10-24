@@ -3,96 +3,96 @@ import './App.css';
 
 class App extends Component {
 
-  constructor(){
+  constructor() {
     super();
     this.state = {
-      title : 'Simple title Contry',
-      countries : []
+      title: 'Simple title Contry',
+      countries: []
     }
   }
 
   // Make Ajax Calls Here
-  componentDidMount(){
+  componentDidMount() {
     var that = this;
     console.log('componente has mounted');
     that.getCountries();
   }
 
 
-  removeCountry(id){
+  removeCountry(id) {
     var that = this;
     let countries = this.state.countries;
-    let country = countries.find(function(country){
+    let country = countries.find(function (country) {
       return country.id === id
     });
 
     var request = new Request('http://localhost:3000/api/remove/' + id, {
-    method: 'DELETE'
+      method: 'DELETE'
     });
 
     fetch(request)
-      .then( response => {
-        countries.splice(countries.indexOf(country),1);
+      .then(response => {
+        countries.splice(countries.indexOf(country), 1);
         that.setState({
-          countries : countries
+          countries: countries
         })
         response.json()
-          .then(function(data){
+          .then(function (data) {
             console.log(data);
           })
       })
-      .catch( error => console.log('Error Remove Country Fetch : ' + error ));
+      .catch(error => console.log('Error Remove Country Fetch : ' + error));
 
-      console.log(country);
+    console.log(country);
   }
 
   getCountries() {
     var that = this;
-    
+
     const url = 'http://localhost:3000/api/countries';
     console.log('componente has mounted');
 
     fetch(url)
       .then(response => response.json())
-      .then( json => {
+      .then(json => {
         that.setState({
-          countries:json
+          countries: json
         })
       })
-      .catch( error => console.log('Error Fetch : ' + error ))
+      .catch(error => console.log('Error Fetch : ' + error))
   }
 
-  addCountry(event){
+  addCountry(event) {
     var that = this;
 
     event.preventDefault();
     let country_data = {
-      country_name : this.refs.country_name.value,
-      continent_name : this.refs.continent_name.value
+      country_name: this.refs.country_name.value,
+      continent_name: this.refs.continent_name.value
     };
 
     var request = new Request('http://localhost:3000/api/new-country', {
       method: 'POST',
-      headers: new  Headers({'Content-Type':'application/json'}),
+      headers: new Headers({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(country_data)
     });
 
     // xmlHttpRequest()
     fetch(request)
-      .then(function(response){
+      .then(function (response) {
         let countries = that.state.countries;
 
         countries.push(country_data);
 
         that.setState({
-              countries: countries
+          countries: countries
         })
         response.json()
-          .then(function(data){
-            })
+          .then(function (data) {
           })
-      .catch(function(err){
-        console.log( 'Fetch Error addCountry :-S', err);
+      })
+      .catch(function (err) {
+        console.log('Fetch Error addCountry :-S', err);
       })
 
   }
@@ -113,7 +113,7 @@ class App extends Component {
 
         <ul>
           {countries.map(country => <li key={country.id}> {country.country_name} {country.continent_name}
-             <button onClick={this.removeCountry.bind(this, country.id)}>Remove</button> </li>)}
+            <button onClick={this.removeCountry.bind(this, country.id)}>Remove</button> </li>)}
 
         </ul>
 
