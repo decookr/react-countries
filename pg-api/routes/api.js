@@ -3,29 +3,27 @@ const router = express();
 
 const pool = require('../modules/pool');
 
-router.get('/countries', function (request, response) {
+router.get('/countries', function (req, res) {
     pool.connect(function (err, db, done) {
         if (err) {
             console.error(err);
-            response.status(500).send({ 'error': err });
+            res.status(500).send({ 'error': err });
         } else {
             db.query('SELECT * FROM COUNTRY', function (err, table) {
                 done();
                 if (err) {
-                    return response.status(400).send({ error: err })
+                    return res.status(400).send({ error: err })
                 } else {
-                    return response.status(200).send(table.rows)
+                    return res.status(200).send(table.rows)
                 }
             })
         }
     })
 });
 
-router.post('/new-country', function (request, response) {
-    const country_name = request.body.country_name;
-    const continent_name = request.body.continent_name;
-
-    const country_values = [country_name, continent_name];
+router.post('/new-country', function (req, res) {
+    const country_name = req.body.country_name;
+    const continent_name = req.body.continent_name;
 
     pool.connect((err, db, done) => {
 
@@ -33,40 +31,40 @@ router.post('/new-country', function (request, response) {
         done();
         if (err) {
             console.error('error open connection', err);
-            return response.status(400).send({ error: err });
+            return res.status(400).send({ error: err });
         }
         else {
             db.query('INSERT INTO COUNTRY( country_name, continent_name ) VALUES ($1,$2)',
-                [...country_values], (err, table) => {
+            [country_name, continent_name], (err, table) => {
                     if (err) {
                         console.error('error running query', err);
-                        return response.status(400).send({ error: err });
+                        return res.status(400).send({ error: err });
                     }
                     else {
                         console.log('Data Inserted: successfully!');
-                        response.status(201).send({ message: 'Data Inserted!' })
+                        res.status(201).send({ message: 'Data Inserted!' })
                     }
                 })
         }
     });
 
-    console.log(request.body);
+    console.log(req.body);
 });
 
 
-router.delete('/remove/:id', function (request, response) {
-    const id = request.params.id;
+router.delete('/remove/:id', function (req, res) {
+    const id = req.params.id;
 
     pool.connect(function (err, db, done) {
         if (err) {
-            return response.status(400).send(err)
+            return res.status(400).send(err)
         } else {
             db.query('DELETE FROM COUNTRY WHERE ID = $1', [Number(id)], function (err, result) {
                 done();
                 if (err) {
-                    return response.status(400).send(err)
+                    return res.status(400).send(err)
                 } else {
-                    return response.status(200).send({ message: 'success delete record' })
+                    return res.status(200).send({ message: 'success delete record' })
                 }
             })
         }

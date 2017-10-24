@@ -6,48 +6,43 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      title: 'Simple title Contry',
+      title: 'Simple title for Country Application',
       countries: []
     }
   }
 
   // Make Ajax Calls Here
   componentDidMount() {
-    const that = this;
+    const self = this;
     console.log('componente has mounted');
-    that.getCountries();
+    self.getCountries();
   }
 
   removeCountry(id) {
-    const that = this;
-    let countries = this.state.countries;
-    let country = countries.find(function (country) {
-      return country.id === id
-    });
+    const self = this;
 
-    const request = new Request('http://localhost:3000/api/remove/' + id, {
+    const request = new Request('http://localhost:5000/api/remove/' + id, {
       method: 'DELETE'
     });
 
     fetch(request)
       .then(response => {
-        that.getCountries();
+        self.getCountries();
       })
       .catch(error => console.log('Error Remove Country Fetch : ' + error));
 
-    console.log(country);
   }
 
   getCountries() {
-    const that = this;
+    const self = this;
 
-    const url = 'http://localhost:3000/api/countries';
-    console.log('componente has mounted');
+    const url = 'http://localhost:5000/api/countries';
+    console.log('component has mounted');
 
     fetch(url)
       .then(response => response.json())
       .then(json => {
-        that.setState({
+        self.setState({
           countries: json
         })
       })
@@ -55,15 +50,15 @@ class App extends Component {
   }
 
   addCountry(event) {
-    const that = this;
+    const self = this;
 
     event.preventDefault();
-    let country_data = {
+    const country_data = {
       country_name: this.refs.country_name.value,
       continent_name: this.refs.continent_name.value
     };
 
-    const request = new Request('http://localhost:3000/api/new-country', {
+    const request = new Request('http://localhost:5000/api/new-country', {
       method: 'POST',
       headers: new Headers({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(country_data)
@@ -73,7 +68,7 @@ class App extends Component {
     fetch(request)
       .then(function (response) {
         console.log('post was successful:', response);
-        that.getCountries();
+        self.getCountries();
       })
       .catch(function (err) {
         console.log('Fetch Error addCountry :-S', err);
