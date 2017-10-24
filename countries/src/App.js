@@ -18,7 +18,6 @@ class App extends Component {
     that.getCountries();
   }
 
-
   removeCountry(id) {
     var that = this;
     let countries = this.state.countries;

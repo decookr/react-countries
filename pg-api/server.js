@@ -6,7 +6,6 @@ var api = require('./routes/api');
 
 const PORT = 3000;
 
-
 var app = express();
 
 app.use(cors()); // allows certain cross-origin requests (DELETE fails without this)
