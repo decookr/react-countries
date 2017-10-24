@@ -7,20 +7,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var errorHandler = require('errorhandler')
-var pg = require('pg');
+
+var api = require('./routes/api');
 
 const PORT =  3000;
-
-let pool = new pg.Pool({
-    database: 'countries',
-    user: 'postgres',
-    password: 'teste',
-    port: 5432,
-    ssl: false,
-    max: 20, //set pool max size to 20
-    min: 4, //set min pool size to 4
-    idleTimeoutMillis: 1000 //close idle clients after 1 second
-});
 
 // var index = require('./routes/index');
 // var users = require('./routes/users');
@@ -59,7 +49,7 @@ if (app.get('env') === 'development') {
 }
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'))  // combined
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -71,85 +61,7 @@ app.use( (req, res, next ) => {
   next();
 });
 
-app.get('/api/countries', function(request, response){
-    pool.connect(function(err,db,done){
-        if(err){            
-            console.error(err);
-            response.status(500).send({ 'error' : err});
-        } else{
-            db.query('SELECT * FROM COUNTRY', function(err, table){
-                done();
-                if(err){
-                    return response.status(400).send({error:err})
-                } else
-                {
-                    return response.status(200).send(table.rows)
-                }
-            })
-        }
-    })
-});
-
-
-
-app.post('/api/new-country', function( request, response) {
-    var country_name = request.body.country_name;
-    var continent_name = request.body.continent_name;
-    // Acho mais eficiente com houver vários usuários WEB
-    // var id = Math.random().toFixed(3);
-
-    var id = request.body.id;;
-
-    let country_values = [country_name, continent_name, id];
-
-    pool.connect((err, db, done) => {
-
-    // Call `done(err)` to release the client back to the pool (or destroy it if there is an error)
-    done();
-    if(err){
-        console.error('error open connection', err);
-        return response.status(400).send({error: err});
-    }
-    else {
-        db.query('INSERT INTO COUNTRY( country_name, continent_name, id ) VALUES ($1,$2,$3)',
-            [...country_values], (err, table) => {
-            if(err) {
-                console.error('error running query', err);
-                return response.status(400).send({error: err});
-            }
-            else {
-                console.log('Data Inserted: ' + id );
-                response.status(201).send({ message: 'Data Inserted! ' + id})
-            }
-        })
-    }
-    });
-
-    console.log(request.body);
-});
-
-
-app.delete('/api/remove/:id', function( request, response){
-    var id = request.params.id;
-
-    pool.connect(function(err,db,done){
-        if(err){
-            return response.status(400).send(err)
-        } else{
-            db.query('DELETE FROM COUNTRY WHERE ID = $1', [Number(id)], function(err, result){
-                done();
-                if(err){
-                    return response.status(400).send(err)
-                } else
-                {
-                    return response.status(200).send({message:'success delete record'})
-                }
-            })
-        }
-    })
-    console.log(id);
-});
-
+app.use('/api', api);
 
 app.listen( PORT, () => console.log('Listening on port' + PORT) );
 

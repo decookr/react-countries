@@ -101,8 +101,7 @@ class App extends Component {
     event.preventDefault();
     let country_data = {
       country_name : this.refs.country_name.value,
-      continent_name : this.refs.continent_name.value,
-      id : Math.random().toFixed(3)
+      continent_name : this.refs.continent_name.value
     };
 
     var request = new Request('http://localhost:3000/api/new-country', {
