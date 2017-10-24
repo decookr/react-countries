@@ -14,36 +14,8 @@ class App extends Component {
   // Make Ajax Calls Here
   componentDidMount(){
     var that = this;
-    const url = 'http://localhost:3000/api/countries';
     console.log('componente has mounted');
-
-    fetch(url)
-      .then(response => response.json())
-      .then( json => {
-        that.setState({
-          countries:json
-        })
-      })
-      .catch( error => console.log('Error Fetch : ' + error ))
-
-
-    {/*
-    fetch('http://localhost:3000/api/countries')
-      .then(function(response){
-        response.json()
-          .then(function(data){
-            that.setState({
-              countries:data
-            })
-          })
-          .catch(function(err){
-              console.log(err);
-            })
-      })
-      .catch(function(err){
-        console.log('Error Fetch : ' + err);
-      })
-      */}
+    that.getCountries();
   }
 
 
@@ -71,29 +43,24 @@ class App extends Component {
       })
       .catch( error => console.log('Error Remove Country Fetch : ' + error ));
 
-
-
-    {/*
-    fetch(request)
-      .then(function(response) {
-        countries.splice(countries.indexOf(country),1);
-        that.setState({
-          countries : countries
-        })
-        response.json()
-          .then(function(data){
-            console.log(data);
-          })
-      })
-      .catch(function(err){
-          console.log( 'Fetch Error :-S removeCountry ', err);
-        });
-        */}
-
-
       console.log(country);
   }
 
+  getCountries() {
+    var that = this;
+    
+    const url = 'http://localhost:3000/api/countries';
+    console.log('componente has mounted');
+
+    fetch(url)
+      .then(response => response.json())
+      .then( json => {
+        that.setState({
+          countries:json
+        })
+      })
+      .catch( error => console.log('Error Fetch : ' + error ))
+  }
 
   addCountry(event){
     var that = this;
