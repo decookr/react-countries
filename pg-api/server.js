@@ -1,26 +1,21 @@
-var express = require('express');
-var cors = require('cors');
-var bodyParser = require('body-parser');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-var api = require('./routes/api');
+const api = require('./routes/api');
 
 const PORT = 3000;
 
-var app = express();
+const app = express();
 
-app.use(cors()); // allows certain cross-origin requests (DELETE fails without this)
+// allows certain cross-origin requests (DELETE fails without this)
+app.use(cors());
 
+// body parser creating req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
+// all of our api routes are in ./routes/api
 app.use('/api', api);
 
 app.listen(PORT, () => console.log('Listening on port', PORT));
-
-module.exports = app;

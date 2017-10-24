@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express();
+const express = require('express');
+const router = express();
 
-var pool = require('../modules/pool');
+const pool = require('../modules/pool');
 
 router.get('/countries', function (request, response) {
     pool.connect(function (err, db, done) {
@@ -22,10 +22,10 @@ router.get('/countries', function (request, response) {
 });
 
 router.post('/new-country', function (request, response) {
-    var country_name = request.body.country_name;
-    var continent_name = request.body.continent_name;
+    const country_name = request.body.country_name;
+    const continent_name = request.body.continent_name;
 
-    let country_values = [country_name, continent_name];
+    const country_values = [country_name, continent_name];
 
     pool.connect((err, db, done) => {
 
@@ -55,7 +55,7 @@ router.post('/new-country', function (request, response) {
 
 
 router.delete('/remove/:id', function (request, response) {
-    var id = request.params.id;
+    const id = request.params.id;
 
     pool.connect(function (err, db, done) {
         if (err) {

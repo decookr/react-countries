@@ -13,19 +13,19 @@ class App extends Component {
 
   // Make Ajax Calls Here
   componentDidMount() {
-    var that = this;
+    const that = this;
     console.log('componente has mounted');
     that.getCountries();
   }
 
   removeCountry(id) {
-    var that = this;
+    const that = this;
     let countries = this.state.countries;
     let country = countries.find(function (country) {
       return country.id === id
     });
 
-    var request = new Request('http://localhost:3000/api/remove/' + id, {
+    const request = new Request('http://localhost:3000/api/remove/' + id, {
       method: 'DELETE'
     });
 
@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   getCountries() {
-    var that = this;
+    const that = this;
 
     const url = 'http://localhost:3000/api/countries';
     console.log('componente has mounted');
@@ -55,7 +55,7 @@ class App extends Component {
   }
 
   addCountry(event) {
-    var that = this;
+    const that = this;
 
     event.preventDefault();
     let country_data = {
@@ -63,7 +63,7 @@ class App extends Component {
       continent_name: this.refs.continent_name.value
     };
 
-    var request = new Request('http://localhost:3000/api/new-country', {
+    const request = new Request('http://localhost:3000/api/new-country', {
       method: 'POST',
       headers: new Headers({ 'Content-Type': 'application/json' }),
       body: JSON.stringify(country_data)
@@ -82,8 +82,8 @@ class App extends Component {
   }
 
   render() {
-    let title = this.state.title;
-    let countries = this.state.countries;
+    const title = this.state.title;
+    const countries = this.state.countries;
 
     return (
       <div className="App">

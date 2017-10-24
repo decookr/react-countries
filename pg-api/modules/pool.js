@@ -1,6 +1,6 @@
-var pg = require('pg');
+const pg = require('pg');
 
-let pool = new pg.Pool({
+const pool = new pg.Pool({
     database: 'countries',
     port: 5432,
     ssl: false,
