@@ -1,9 +1,9 @@
 {
   "name": "pg-api",
   "version": "1.0.2",
-  "description": "Projeto demonstração de utilização REACT with PostgreSQL",
+  "description": "Create, Read, and Delete REACT with PostgreSQL",
   "main": "server.js",
-  "repository": "https://github.com/cglsoft/react_postgreSQL.git",
+  "repository": "https://github.com/lukeschlangen/react-postgres-crd-app.git",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
