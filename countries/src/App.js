@@ -32,14 +32,7 @@ class App extends Component {
 
     fetch(request)
       .then(response => {
-        countries.splice(countries.indexOf(country), 1);
-        that.setState({
-          countries: countries
-        })
-        response.json()
-          .then(function (data) {
-            console.log(data);
-          })
+        that.getCountries();
       })
       .catch(error => console.log('Error Remove Country Fetch : ' + error));
 
@@ -80,16 +73,8 @@ class App extends Component {
     // xmlHttpRequest()
     fetch(request)
       .then(function (response) {
-        let countries = that.state.countries;
-
-        countries.push(country_data);
-
-        that.setState({
-          countries: countries
-        })
-        response.json()
-          .then(function (data) {
-          })
+        console.log('post was successful:', response);
+        that.getCountries();
       })
       .catch(function (err) {
         console.log('Fetch Error addCountry :-S', err);
