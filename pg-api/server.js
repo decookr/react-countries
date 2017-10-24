@@ -10,7 +10,7 @@ var errorHandler = require('errorhandler')
 
 var api = require('./routes/api');
 
-const PORT =  3000;
+const PORT = 3000;
 
 // var index = require('./routes/index');
 // var users = require('./routes/users');
@@ -44,8 +44,8 @@ app.use(function(err, req, res, next) {
 
 // error handling middleware should be loaded after the loading the routes
 if (app.get('env') === 'development') {
-  app.use(errorHandler());
-  console.log('errorHandle loaded!');
+    app.use(errorHandler());
+    console.log('errorHandle loaded!');
 }
 
 // uncomment after placing your favicon in /public
@@ -55,14 +55,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use( (req, res, next ) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 app.use('/api', api);
 
-app.listen( PORT, () => console.log('Listening on port' + PORT) );
+app.listen(PORT, () => console.log('Listening on port' + PORT));
 
 module.exports = app;
