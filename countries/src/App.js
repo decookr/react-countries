@@ -19,6 +19,7 @@ class App extends Component {
     this.removeCountry = this.removeCountry.bind(this);
     this.addCountry = this.addCountry.bind(this);
     this.updateCountryName = this.updateCountryName.bind(this);
+    this.updateContinentName = this.updateContinentName.bind(this);
   }
 
   // This gets called when the page loads
@@ -121,7 +122,7 @@ class App extends Component {
             <li key={country.id}> {country.country_name} {country.continent_name}
               {/* A linter would want this line to be () => this.removeCountry(county.id). 
               I am leaving the event in so its clear that this is an event handler */}
-              <button onClick={event => this.removeCountry(county.id)}>Remove</button>
+              <button onClick={event => this.removeCountry(country.id)}>Remove</button>
             </li>
           ))}
           {/* by including the button in this repeated section, we create a new button for each 
