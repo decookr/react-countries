@@ -9,7 +9,7 @@ router.get('/countries', function (req, res) {
             console.error(err);
             res.status(500).send({ 'error': err });
         } else {
-            db.query('SELECT * FROM COUNTRY', function (err, table) {
+            db.query('SELECT * FROM country', function (err, table) {
                 done();
                 if (err) {
                     return res.status(400).send({ error: err })
@@ -34,7 +34,7 @@ router.post('/new-country', function (req, res) {
             return res.status(400).send({ error: err });
         }
         else {
-            db.query('INSERT INTO COUNTRY( country_name, continent_name ) VALUES ($1,$2)',
+            db.query('INSERT INTO country( country_name, continent_name ) VALUES ($1,$2)',
             [country_name, continent_name], (err, table) => {
                     if (err) {
                         console.error('error running query', err);
@@ -59,7 +59,7 @@ router.delete('/remove/:id', function (req, res) {
         if (err) {
             return res.status(400).send(err)
         } else {
-            db.query('DELETE FROM COUNTRY WHERE ID = $1', [Number(id)], function (err, result) {
+            db.query('DELETE FROM country WHERE ID = $1', [Number(id)], function (err, result) {
                 done();
                 if (err) {
                     return res.status(400).send(err)
