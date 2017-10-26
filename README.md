@@ -25,7 +25,7 @@ CREATE TABLE COUNTRY (
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/LukeSchlangen/react-postgres-crd-app.git
+git clone https://github.com/PrimeAcademy/betelgeuse-introduction-to-react.git
 ```
 
 navigate into repository
