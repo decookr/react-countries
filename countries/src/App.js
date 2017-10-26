@@ -26,7 +26,8 @@ class App extends Component {
   }
 
   // This gets called when the page loads
-  // This is essentially the React equivalent of jQuery's on ready
+  // This is essentially the React equivalent of jQuery's `$( document ).ready()`
+  // componentDidMount is just one of many ifecycle methods, you can learn more here: http://busypeoples.github.io/post/react-component-lifecycle/
   componentDidMount() {
     console.log('component has mounted');
     this.getCountries(); // making our first call to the api
@@ -92,7 +93,7 @@ class App extends Component {
         // if the post is successful, run getCountries again to update the list
         this.getCountries();
       })
-      .catch(error => console.log(`Fetch Error addCountry :-S ${error}`));
+      .catch(error => console.log(`Fetch Error addCountry: ${error}`));
   }
 
   updateCountryName(event) {
