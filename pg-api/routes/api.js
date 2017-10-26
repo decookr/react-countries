@@ -26,9 +26,6 @@ router.post('/new-country', function (req, res) {
     const continent_name = req.body.continent_name;
 
     pool.connect((err, db, done) => {
-
-        // Call `done(err)` to release the client back to the pool (or destroy it if there is an error)
-        done();
         if (err) {
             console.error('error open connection', err);
             return res.status(400).send({ error: err });
@@ -36,6 +33,7 @@ router.post('/new-country', function (req, res) {
         else {
             db.query('INSERT INTO country( country_name, continent_name ) VALUES ($1,$2)',
             [country_name, continent_name], (err, table) => {
+                    done();
                     if (err) {
                         console.error('error running query', err);
                         return res.status(400).send({ error: err });
