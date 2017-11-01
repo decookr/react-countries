@@ -1,6 +1,6 @@
 # React PostgreSQL
 
-This application has the ability to Create, Read, and Update countries on a list.
+This application has the ability to Create, Read, and Delete countries on a list.
 
 ![application-screenshot.png](application-screenshot.png)
 
