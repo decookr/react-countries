@@ -25,13 +25,13 @@ CREATE TABLE COUNTRY (
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/PrimeAcademy/betelgeuse-introduction-to-react.git
+git clone https://github.com/PrimeAcademy/betelgeuse-react-postgres-crd-app.git
 ```
 
 navigate into repository
 
 ```bash
-cd react-postgres-crd-app
+cd betelgeuse-react-postgres-crd-app
 ```
 
 ### Install Dependencies
